@@ -2,6 +2,18 @@ import { useContext, useState } from "react";
 import Modal from "./components/UI/Modal";
 import ModalContext from "./context/ModalContext";
 import CartContext from "./context/CartContext";
+import { postMeals } from "./utils/rest";
+import toast from "react-hot-toast";
+
+async function postData(payload) {
+  try {
+    const res = await postMeals(payload);
+    toast.success(res.data.message);
+  } catch (err) {
+    console.error(err);
+    toast.error(err);
+  }
+}
 
 export default function Order() {
   const [formData, setFormData] = useState({
@@ -27,6 +39,7 @@ export default function Order() {
         items: items,
       },
     };
+    postData(payload);
   }
 
   return (

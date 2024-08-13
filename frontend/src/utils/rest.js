@@ -11,5 +11,13 @@ export async function getMeals() {
 }
 
 export async function postMeals(payload) {
-  const res = await axios.post(`${ULR}/orders`, payload);
+  const res = await axios.post(`${URL}/orders`, payload, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.status != 201) {
+    return new Error("Unable to send post data");
+  }
+  return res;
 }
